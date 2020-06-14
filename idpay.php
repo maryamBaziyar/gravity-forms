@@ -2279,7 +2279,6 @@ class GF_Gateway_IDPay
 
             if (apply_filters(self::$author . '_gf_IDPay_verify', apply_filters(self::$author . '_gf_gateway_verify', ($payment_type != 'custom'), $form, $entry), $form, $entry)) {
 
-//               print_r(self::_payment_entry_detail( $Note,$Status));die;
                 foreach ($form['confirmations'] as $key => $value) {
 
                     $form['confirmations'][$key]['message'] =self::_payment_entry_detail( $Note,$Status);
@@ -2362,43 +2361,17 @@ class GF_Gateway_IDPay
         public
         static function _payment_entry_detail($messages, $payment_status)
         {
-//die;
 
-//        do_action('gf_gateway_entry_detail');
-//
-//
-//        $payment_status = rgar($entry, "payment_status");
-
-
-            if ($payment_status == 'Paid') {
-//            $payment_status_persian = __('پرداخت انجام شده است', 'gravityformsIDPay');
-                $status = 'susssess';
-            }
-            if ($payment_status == 'completed') {
-//            $payment_status_persian = __('پرداخت انجام شده است', 'gravityformsIDPay');
-                $status = 'susssess';
+            if ($payment_status == 'Paid' || $payment_status == 'completed'||$payment_status == 'Active') {
+                $status = 'success';
             }
 
-            if ($payment_status == 'Active') {
-//            $payment_status_persian = __('پرداخت انجام شده است', 'gravityformsIDPay');
-                $status = 'susssess';
-
-            }
-
-            if ($payment_status == 'Cancelled') {
-//            $payment_status_persian = __('انصراف از پرداخت', 'gravityformsIDPay');
-                $status = 'faild';
-
-            }
-
-            if ($payment_status == 'Failed') {
-//            $payment_status_persian = __('پرداخت ناموفق بوده است', 'gravityformsIDPay');
+            if ($payment_status == 'Cancelled'||$payment_status == 'Failed') {
                 $status = 'Failed';
 
             }
 
             if ($payment_status == 'Processing') {
-//            $payment_status_persian = __('تراکنش در حالت معلق وجود دارد.', 'gravityformsIDPay');
                 $status = 'info';
 
             }
@@ -2406,7 +2379,7 @@ class GF_Gateway_IDPay
             if ($status == 'Failed') {
                 return '<div  style=" direction:rtl;padding: 20px;background-color: #f44336;color: white;opacity: 0.83;transition: opacity 0.6s;margin-bottom: 15px;">' .  $messages . '</div>';
             }
-            if ($status == 'susssess') {
+            if ($status == 'success') {
                 return '<div  style="direction:rtl;padding: 20px;background-color: #4CAF50;color: white;opacity: 0.83;transition: opacity 0.6s;margin-bottom: 15px;">' .  $messages . '</div>';
             }
             if ($status == 'info') {
